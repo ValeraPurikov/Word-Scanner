@@ -57,7 +57,14 @@ public class UI {
                 });
                 //Save the result
                 try {
-                    saveToFiles(result, filePath);
+                    //Save the words which begin with a-g letters
+                    saveToFiles(result, filePath + "/resultAG.txt", "^[a-g]+$");
+                    //Save the words which begin with h-n letters
+                    saveToFiles(result, filePath + "/resultHN.txt", "^[h-n]+$");
+                    //Save the words which begin with o-u letters
+                    saveToFiles(result, filePath + "/resultOU.txt", "^[o-u]+$");
+                    //Save the words which begin with v-z letters
+                    saveToFiles(result, filePath + "/resultVZ.txt", "^[v-z]+$");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -134,47 +141,22 @@ public class UI {
         }
     }
 
-    public void saveToFiles(Words ws, String s) throws IOException {
+    public void saveToFiles(Words ws, String s, String regex) throws IOException {
         //Saves the given list to a given folder path
+        //Will save only the words where the first letter matches the given regex
         if (ws.list.isEmpty())
             return;
-        File fileAG = new File(s + "/resultAG.txt");
-        File fileHN = new File(s + "/resultHN.txt");
-        File fileOU = new File(s + "/resultOU.txt");
-        File fileVZ = new File(s + "/resultVZ.txt");
-        if (!fileAG.exists())
-            fileAG.createNewFile();
-        if (!fileHN.exists())
-            fileHN.createNewFile();
-        if (!fileOU.exists())
-            fileOU.createNewFile();
-        if (!fileVZ.exists())
-            fileVZ.createNewFile();
-        FileWriter fileWriterAG = new FileWriter(fileAG, true);
-        FileWriter fileWriterHN = new FileWriter(fileHN, true);
-        FileWriter fileWriterOU = new FileWriter(fileOU, true);
-        FileWriter fileWriterVZ = new FileWriter(fileVZ, true);
+        File file = new File(s);
+        if (!file.exists())
+            file.createNewFile();
+        FileWriter fileWriter = new FileWriter(file, true);
         for (WordInFile w : ws.list) {
-            if (w.word.substring(0, 1).matches("^[a-g]+$")) {
-                fileWriterAG.write(w.toString() + "\n");//appends the string to the file
+            if (w.word.substring(0, 1).matches(regex)) {
+                fileWriter.write(w.toString() + "\n");//appends the string to the file
                 continue;
-            }
-            if (w.word.substring(0, 1).matches("^[h-n]+$")) {
-                fileWriterHN.write(w.toString() + "\n");//appends the string to the file
-                continue;
-            }
-            if (w.word.substring(0, 1).matches("^[o-u]+$")) {
-                fileWriterOU.write(w.toString() + "\n");//appends the string to the file
-                continue;
-            }
-            if (w.word.substring(0, 1).matches("^[v-z]+$")) {
-                fileWriterVZ.write(w.toString() + "\n");//appends the string to the file
             }
         }
-        fileWriterAG.close();
-        fileWriterHN.close();
-        fileWriterOU.close();
-        fileWriterVZ.close();
+        fileWriter.close();
     }
 
     public String getFolderPath() {
