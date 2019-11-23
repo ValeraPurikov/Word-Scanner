@@ -147,9 +147,13 @@ public class UI {
         if (ws.list.isEmpty())
             return;
         File file = new File(s);
-        if (!file.exists())
+        FileWriter fileWriter;
+        if (!file.exists()) {
             file.createNewFile();
-        FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter = new FileWriter(file, true);
+        }else{
+            fileWriter = new FileWriter(file, false);
+        }
         for (WordInFile w : ws.list) {
             if (w.word.substring(0, 1).matches(regex)) {
                 fileWriter.write(w.toString() + "\n");//appends the string to the file
