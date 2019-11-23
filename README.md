@@ -1,10 +1,11 @@
 # Word Scanner
 
-This is a JAVA Project. It accepts multiple text files and scans them for words. The result is a list of words, coupled with a number of how often they occur. It is saved in 4 different files, depending on their first letter.  
+This is a Maven JAVA Project. It accepts multiple text files and scans them for words. The result is a list of words, coupled with a number of how often they occur. It is saved in 4 different files, depending on their first letter.  
 
 ## Dependencies
 
 Java SDK 13 <br/>
+Maven <br/>
 
 ## Installation
 
